@@ -12,9 +12,9 @@ Hướng dẫn cách sử dụng dự án của bạn, bao gồm cách thêm và
 
 ## Khung Code Hiển Thị
 
---controller: Chứa các file liên quan đến cơ sở dữ liệu và truy vấn dữ liệu.
---model: Chứa các file xử lý logic điều khiển.
---view: Chứa các file HTML hoặc template liên quan đến giao diện người dùng.
+controller: Chứa các file liên quan đến cơ sở dữ liệu và truy vấn dữ liệu.
+model: Chứa các file xử lý logic điều khiển.
+view: Chứa các file HTML hoặc template liên quan đến giao diện người dùng.
 run: server.js
 
 ```javascript
