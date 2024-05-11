@@ -19,6 +19,9 @@ const userController = new UserController('./database.db');
 // Middleware để xử lý dữ liệu gửi từ form
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, 'views/css'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, 'views/img'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, 'views/js'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
 app.use(express.static(path.join(__dirname, 'views'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
 
 app.get('/login', (req, res) => {
