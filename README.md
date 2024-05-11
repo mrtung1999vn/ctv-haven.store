@@ -20,9 +20,12 @@ Tăng cường hiệu suất: Tối ưu hóa quản lý sản phẩm, đơn hàn
 Mở rộng quy mô: Mở rộng quy mô kinh doanh của bạn với sự hỗ trợ của các cộng tác viên bán hàng.
 Tối ưu hóa chi phí: Tiết kiệm thời gian và công sức với quản lý đơn hàng tự động và báo cáo phân tích.
 
+## Công nghệ
+Có tích hợp gps, send email, quản lý tệp dữ liệu khách hàng, duyệt đơn khi đặt hàng.
+
 ## Cài Đặt
 
-Hướng dẫn cài đặt và chạy dự án trên máy cục bộ.
+Hướng dẫn cài đặt và chạy dự án trên máy cục bộ & vps.
 npm 10.5.2
 node v20.13.1
 

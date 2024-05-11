@@ -2,9 +2,14 @@ const express = require('express');
 const UserController = require('./controllers/userController');
 const path = require('path');
 const { error } = require('console');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 1001;
+
+// Enable CORS for all routes
+app.use(cors());
+
 
 // Cấu hình EJS làm trình động mặc định cho Express
 app.set('view engine', 'ejs');
