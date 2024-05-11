@@ -14,43 +14,62 @@ const userController = new UserController('./database.db');
 // Middleware để xử lý dữ liệu gửi từ form
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'public'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, 'views'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
 
 app.get('/login', (req, res) => {
+    res.setHeader('Content-Type', 'text/html'); // Đặt header Content-Type là text/html
     res.sendFile(path.join(__dirname, 'views', 'login.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
 });
 
 // Xử lý đăng nhập
 app.post('/login', (req, res) => {
-    userController.loginUser(req.body.username, req.body.password)
+    let successMessage = '';
+
+    userController.loginUser(req.body.username, req.body.password,(error, errorMessage)=>{
+        if(error){
+            successMessage = "đăng nhập thành công!";
+            // res.render('register', { successMessage });
+
+        }else{
+            successMessage = "đăng nhập thất bại!";
+            // userController.registerUser(req.body.username, req.body.password)
+            // successMessage = "Registration successful! You can now login.";
+            // res.render('register', { successMessage });
+        }
+    })
 });
 
 // Route cho trang đăng ký
 app.get('/register', (req, res) => {
+    res.setHeader('Content-Type', 'text/html'); // Đặt header Content-Type là text/html
     res.sendFile(path.join(__dirname, 'views', 'register.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
 });
 
 // Xử lý đăng ký
 app.post('/register', (req, res) => {
-
-
     const { username, password } = req.body;
-    let successMessage = ''
+    let successMessage = '';
     userController.getUserName(username, (error,errorMessage)=>{
-        console.log(error)
         if(error){
-            console.log('dang ky that bai')
-            successMessage = "Username already exists. Please choose a different username.";
+            successMessage = "Đã có tài khoản trên hệ thống. Hãy đặt tài khoản tên khác!";
             res.render('register', { successMessage });
         }else{
-            console.log('dang ky thanh cong')
             userController.registerUser(req.body.username, req.body.password)
-            successMessage = "Registration successful! You can now login.";
+            successMessage = "Đã đăng ký thành công! Vui lòng đăng nhập tài khoản!.";
             res.render('register', { successMessage });
         }
     })
 
 });
+
+
+//#region Giới Thiệu App
+app.get('/', (req, res) => {
+    console.log("")
+    res.setHeader('Content-Type', 'text/html'); // Đặt header Content-Type là text/html
+    res.render(path.join(__dirname, 'views', 'hello-app.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
+})
+//#endregion
 
 // Khởi động server
 app.listen(PORT, () => {
