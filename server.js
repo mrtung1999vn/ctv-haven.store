@@ -3,8 +3,9 @@ const UserController = require('./controllers/userController');
 const path = require('path');
 const { error } = require('console');
 const cors = require('cors');
-
+const secretKey = process.env.SECRET_KEY || 'thanhtung0309';
 const app = express();
+const jwt = require('jsonwebtoken');
 const PORT = process.env.PORT || 1001;
 
 // Enable CORS for all routes
@@ -19,38 +20,47 @@ const userController = new UserController('./database.db');
 // Middleware để xử lý dữ liệu gửi từ form
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'views/css'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
-app.use(express.static(path.join(__dirname, 'views/img'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
-app.use(express.static(path.join(__dirname, 'views/js'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, '/views/css'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, '/views/img'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, '/views/js'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
 app.use(express.static(path.join(__dirname, 'views'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
 
 app.get('/login', (req, res) => {
+    let loginSuccess = false
     res.setHeader('Content-Type', 'text/html'); // Đặt header Content-Type là text/html
-    res.sendFile(path.join(__dirname, 'views', 'login.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
+    res.render(path.join(__dirname, 'views', 'login.ejs'), {loginSuccess}); // Gửi file ejs cho trình duyệt khi truy cập /login
 });
 
 // Xử lý đăng nhập
 app.post('/login', (req, res) => {
     let successMessage = '';
-
+    let loginSuccess = false
     userController.loginUser(req.body.username, req.body.password,(error, errorMessage)=>{
         if(error){
             successMessage = "đăng nhập thành công!";
-            // res.render('register', { successMessage });
+            console.log(successMessage)
+            // Tạo JWT
+            const token = jwt.sign({ username: req.body.username }, secretKey);
+            // Gửi JWT về cho client
+            res.json({ token:token, username: req.body.username });
+
+            res.render('login', { loginSuccess: true }); // Gửi biến loginSuccess về EJS
 
         }else{
-            successMessage = "đăng nhập thất bại!";
-            // userController.registerUser(req.body.username, req.body.password)
-            // successMessage = "Registration successful! You can now login.";
-            // res.render('register', { successMessage });
+            
+            successMessage = "đăng nhập thất bại! Vui lòng thử lại";
+            console.log(successMessage)
+
+            res.render('login', { loginSuccess: false }); // Gửi biến loginSuccess về EJS
         }
     })
 });
 
 // Route cho trang đăng ký
 app.get('/register', (req, res) => {
+    let successMessage = ''
     res.setHeader('Content-Type', 'text/html'); // Đặt header Content-Type là text/html
-    res.sendFile(path.join(__dirname, 'views', 'register.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
+    res.render(path.join(__dirname, 'views', 'register.ejs'), {successMessage}); // Gửi file ejs cho trình duyệt khi truy cập /login
 });
 
 // Xử lý đăng ký
