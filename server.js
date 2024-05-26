@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 1001;
 // Enable CORS for all routes
 app.use(cors());
 
-
 // Cấu hình EJS làm trình động mặc định cho Express
 app.set('view engine', 'ejs');
 
@@ -43,8 +42,10 @@ app.post('/login', (req, res) => {
             const token = jwt.sign({ username: req.body.username }, secretKey);
             // Gửi JWT về cho client
             res.json({ token:token, username: req.body.username });
-
-            res.render('login', { loginSuccess: true }); // Gửi biến loginSuccess về EJS
+            userController.updateUserByName( token, req.body.username, (error, errorMessage)=>{
+                res.render('login', { loginSuccess: true }); // Gửi biến loginSuccess về EJS
+            })
+            
 
         }else{
             
@@ -65,14 +66,14 @@ app.get('/register', (req, res) => {
 
 // Xử lý đăng ký
 app.post('/register', (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
     let successMessage = '';
     userController.getUserName(username, (error,errorMessage)=>{
         if(error){
             successMessage = "Đã có tài khoản trên hệ thống. Hãy đặt tài khoản tên khác!";
             res.render('register', { successMessage });
         }else{
-            userController.registerUser(req.body.username, req.body.password)
+            userController.registerUser(req.body.username, req.body.password, req.body.email)
             successMessage = "Đã đăng ký thành công! Vui lòng đăng nhập tài khoản!.";
             res.render('register', { successMessage });
         }

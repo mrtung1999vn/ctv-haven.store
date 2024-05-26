@@ -5,9 +5,10 @@ class UserController {
         this.userModel = new UserModel(dbFilePath);
     }
 
-    registerUser(username, password, callback) {
+    registerUser(username, password, email, callback) {
         try {
-            this.userModel.createUser(username, password, callback);    
+            console.log(username, password, email)
+            this.userModel.createUser(username, password, email, callback);    
         } catch (error) {   
         }
     }
@@ -26,6 +27,10 @@ class UserController {
 
     getUserName(username, callback){
         this.userModel.getUserByUsername(username,callback)
+    }
+
+    updateUserByName(token, id, callback){
+        this.userModel.updateUserByName(token, id, callback)
     }
 }
 
