@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player with Chat</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    /* Style cho khung chat */
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      margin-bottom: 10px;
+    }
+
+    /* Style cho tên người gửi */
+    .username {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Khung hiển thị video -->
+  <video id="video" controls width="640" height="360">
+    <source src="/videos/video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Khung chat -->
+  <ul id="messages"></ul>
+  <input id="message" autocomplete="off">
+  <button onclick="sendMessage()">Send</button>
+
+  <!-- Script JavaScript -->
+  <script>
+    var socket = io();
+
+    // Gửi tin nhắn chat
+    function sendMessage() {
+      var message = document.getElementById('message').value;
+      socket.emit('chat message', message);
+      document.getElementById('message').value = '';
+    }
+
+    // Hiển thị tin nhắn chat
+    socket.on('chat message', function(msg) {
+      var messages = document.getElementById('messages');
+      var item = document.createElement('li');
+      var username = document.createElement('span');
+      username.className = 'username';
+      username.textContent = msg.username + ': ';
+      item.appendChild(username);
+      item.textContent += msg.message;
+      messages.appendChild(item);
+    });
+
+    // Hỏi người dùng tên người dùng khi trang được tải
+    var username = prompt('Enter your username:');
+    socket.emit('register', username);
+
+
+    // Gửi tin nhắn khi nhấn phím "Enter"
+    function handleKeyDown(event) {
+        if (event.keyCode === 'Enter') {
+            sendMessage();
+        }
+    }
+  </script>
+</body>
+</html>

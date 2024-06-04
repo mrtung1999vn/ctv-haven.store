@@ -5,10 +5,10 @@ class UserController {
         this.userModel = new UserModel(dbFilePath);
     }
 
-    registerUser(username, password, email, callback) {
+    registerUser(username, password, email,reference , callback) {
         try {
             console.log(username, password, email)
-            this.userModel.createUser(username, password, email, callback);    
+            this.userModel.createUser(username, password, email, reference, callback);    
         } catch (error) {   
         }
     }

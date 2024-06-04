@@ -68,6 +68,12 @@
                         </div>
                     </div>
 
+                    <% if (registerSuccess) { %>
+                        <div class="alert alert-success" role="alert">
+                            Đăng ký thành công!
+                        </div>
+                    <% } %>
+
                     <% if (loginSuccess) { %>
                         <div class="alert alert-success" role="alert">
                             Đăng nhập thành công!

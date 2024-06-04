@@ -15,14 +15,20 @@ class UserModel {
                 password TEXT NOT NULL,
                 wallet TEXT NOT NULL,
                 token TEXT NOT NULL,
+                reference TEXT NOT NULL,
                 status TEXT NOT NULL
             )`);
         });
     }
 
-    createUser(username, password, email, callback) {
-        console.log( username, password, email )
-        this.db.run('INSERT INTO users (username, password, email, wallet, token, status) VALUES (?, ?, ?, 0, 0, 0)', [username, password, email], callback);
+    createUser(username, password, email, reference, callback) {
+        try{
+            
+            this.db.run('INSERT INTO users (username, password, email, wallet, token, status, reference) VALUES (?, ?, ?, 0, 0, 0, ?)', [username, password, email, reference], callback);
+        }catch (error){
+            console.log(error)
+        }
+        
     }
 
     getUserByUsername(username, callback) {
