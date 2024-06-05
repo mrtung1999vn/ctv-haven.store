@@ -1,4 +1,6 @@
 # Tên Dự Án
+NODE -v20.13.1
+NPM -v10.5.2
 
 Shop Management Platform là một nền tảng toàn diện giúp quản lý các shop liên kết và cộng tác viên bán hàng một cách hiệu quả. Với sự kết hợp của tính năng tiên tiến và giao diện thân thiện, nền tảng này là công cụ hoàn hảo cho các doanh nhân và cộng tác viên muốn tăng cường hiệu suất kinh doanh và tối ưu hóa doanh số bán hàng.
 
