@@ -14,10 +14,14 @@ class UserController {
     }
 
     loginUser(username, password, callback) {
-        this.userModel.getUserByUsername(username, (err, user) => {
+        this.userModel.getUserByUsername(username, password, (err, user) => {
+            if(user=== null){ 
+                callback(null, false);  // Authentication error  
+                return    
+            }
             if (err) {
                 callback(err);
-            } else if (!user || user.password !== password) {
+            } else if (user.username !== user || user.password !== password) {
                 callback(null, false);  // Authentication error
             } else {
                 callback(null, true);  // Authentication successful

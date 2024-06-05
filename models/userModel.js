@@ -31,18 +31,18 @@ class UserModel {
         
     }
 
-    getUserByUsername(username, callback) {
-        this.db.get('SELECT * FROM users WHERE username = ?', [username], (err, row) => {
+    getUserByUsername(username, password, callback) {
+        this.db.get('SELECT * FROM users WHERE username = ? and password = ?', [username, password], (err, row) => {
             if (err) {
                 console.error(`Error executing SQL query: ${err.message}`);
                 callback(err, null);
             } else {
                 console.log(row)
                 if (row) {
-                    console.log('da co')
+                    console.log('USERNAME TRUE')
                     callback(true, row);
                 } else {
-                    console.log('chua co')
+                    console.log('USERNAME FALSE')
                     callback(false, null);
                 }
             }
