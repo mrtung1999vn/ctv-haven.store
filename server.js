@@ -5,7 +5,7 @@ const UserController = require('./controllers/userController');
 const path = require('path');
 const { error } = require('console');
 const cors = require('cors');
-const secretKey = process.env.SECRET_KEY || 'thanhtung0309';
+const secretKey = 'thanhtung0309' || process.env.SECRET_KEY;
 const app = express();
 
 const PORT = process.env.PORT || 1001;

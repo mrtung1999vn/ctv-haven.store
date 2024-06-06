@@ -3,8 +3,9 @@ const router = express.Router();
 const UserController = require('../controllers/userController');
 const jwt = require('jsonwebtoken');
 const userController = new UserController('./database.db');
-const secretKey = process.env.SECRET_KEY || 'thanhtung0309';
+const secretKey = 'thanhtung0309' ||  process.env.SECRET_KEY;
 const path = require('path');
+const CryptoJS = require('crypto-js');
 
 router.get('/login', (req, res) => {
     let loginSuccess = false;
@@ -32,13 +33,18 @@ router.post('/login', (req, res) => {
             // Gửi JWT về cho client
             // res.json({ token:token, username: req.body.username });
             userController.updateUserByName( token, req.body.username, (error, errorMessage)=>{
+                console.log(`secretKey SERVER ${ secretKey }`)
+                req.session.user = { username: req.body.username, loginSuccess: true,token: token, username: req.body.username };
 
-                req.session.user = { username: req.body.username, loginSuccess: true,token:token, username: req.body.username };
-                res.redirect(302, '/home');
+                const sessionData = req.session.user;
+                console.log( req.session.user )
+                const encodedData = Buffer.from(JSON.stringify(sessionData)).toString('base64');
+
+                res.redirect(302,`/home?sessionData=${encodedData}&secretKey=${ secretKey }`);
             })
         }else{
             successMessage = "đăng nhập thất bại! Vui lòng thử lại";
-            res.render('login', { loginSuccess: false, registerSuccess: false, successMessage: true}); // Gửi biến loginSuccess về EJS
+            res.render('login', { loginSuccess: false, registerSuccess: false, successMessage: true, sessionData: []}); // Gửi biến loginSuccess về EJS
         }
     })
 });
