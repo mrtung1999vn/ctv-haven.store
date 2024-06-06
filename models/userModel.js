@@ -37,7 +37,7 @@ class UserModel {
                 console.error(`Error executing SQL query: ${err.message}`);
                 callback(err, null);
             } else {
-                console.log(row)
+                // console.log(row)
                 if (row) {
                     console.log('USERNAME TRUE')
                     callback(true, row);
@@ -54,7 +54,6 @@ class UserModel {
         
         this.db.get('UPDATE users SET token = ?, status = true WHERE username = ?', [token, username], (err, row) => {
             if (err) {
-                console.error(`Error executing SQL query: ${err.message}`);
                 callback(err, null);
             } else {
                     console.log('da cap nhap')

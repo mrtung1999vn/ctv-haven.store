@@ -58,8 +58,6 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-
-
 //#region Home
 app.get(`/home`, (req, res) => {
     console.log("home")

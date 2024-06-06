@@ -25,7 +25,7 @@ router.post('/login', (req, res) => {
     let loginSuccess = false
     userController.loginUser(req.body.username, req.body.password,(error, errorMessage)=>{
 
-        console.log( req.body.username, req.body.password )
+        // console.log( req.body.username, req.body.password )
         if(error){
             successMessage = "đăng nhập thành công!";
             // Tạo JWT
@@ -33,14 +33,10 @@ router.post('/login', (req, res) => {
             // Gửi JWT về cho client
             // res.json({ token:token, username: req.body.username });
             userController.updateUserByName( token, req.body.username, (error, errorMessage)=>{
-                console.log(`secretKey SERVER ${ secretKey }`)
-                req.session.user = { username: req.body.username, loginSuccess: true,token: token, username: req.body.username };
+                console.log(`USER ${ errorMessage }`)
+                req.session.user = { username: req.body.username, loginSuccess: true,token: token, username: req.body.username,wallet: error };
 
-                const sessionData = req.session.user;
-                console.log( req.session.user )
-                const encodedData = Buffer.from(JSON.stringify(sessionData)).toString('base64');
-
-                res.redirect(302,`/home?sessionData=${encodedData}&secretKey=${ secretKey }`);
+                res.render('home', { loginSuccess: true, registerSuccess: false, successMessage: false, sessionData: req.session.user}); // Gửi biến loginSuccess về EJS
             })
         }else{
             successMessage = "đăng nhập thất bại! Vui lòng thử lại";
