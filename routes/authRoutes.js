@@ -4,6 +4,7 @@ const UserController = require('../controllers/userController');
 const jwt = require('jsonwebtoken');
 const userController = new UserController('./database.db');
 const secretKey = process.env.SECRET_KEY || 'thanhtung0309';
+const path = require('path');
 
 router.get('/login', (req, res) => {
     let loginSuccess = false;
@@ -13,7 +14,7 @@ router.get('/login', (req, res) => {
     if (req.query.registerSuccess === 'true') {
         registerSuccess = true;
     }
-    res.render(path.join(__dirname, 'views', 'login.ejs'), { loginSuccess, registerSuccess }); // Gửi file ejs cho trình duyệt khi truy cập /login
+    res.render(path.join(__dirname, '../views', 'login.ejs'), { loginSuccess, registerSuccess }); // Gửi file ejs cho trình duyệt khi truy cập /login
 
 });
 
@@ -45,7 +46,7 @@ router.post('/login', (req, res) => {
 // Route cho trang đăng ký
 router.get('/register', (req, res) => {
     let successMessage = ''
-    res.render(path.join(__dirname, 'views', 'register.ejs'), {successMessage}); // Gửi file ejs cho trình duyệt khi truy cập /login
+    res.render(path.join(__dirname, '../views', 'register.ejs'), {successMessage}); // Gửi file ejs cho trình duyệt khi truy cập /login
 });
 
 // Xử lý đăng ký

@@ -27,7 +27,7 @@ app.use(cors());
 app.set('view engine', 'ejs');
 // Middleware để phân tích nội dung gửi dưới dạng JSON
 app.use(express.json());
-const userController = new UserController('./database.db');
+
 
 // Middleware để xử lý dữ liệu gửi từ form
 app.use(express.urlencoded({ extended: true }));
