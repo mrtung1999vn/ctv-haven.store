@@ -12,12 +12,15 @@
   "author": "tung",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.2",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2",
     "socket.io": "^4.7.5",
     "sqlite3": "^5.1.7"
   },

@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/userController');
-const jwt = require('jsonwebtoken');
+const WorkersController = require('../controllers/workersController');
 const userController = new UserController('./database.db');
+const workersController = new WorkersController('./database.db');
+
+const jwt = require('jsonwebtoken');
 const secretKey = 'thanhtung0309' ||  process.env.SECRET_KEY;
 const path = require('path');
 const CryptoJS = require('crypto-js');
+// Import thư viện Axios
+const axios = require('axios');
+
+// Import thư viện dotenv
+
 
 router.get('/login', (req, res) => {
     let loginSuccess = false;
@@ -23,21 +31,48 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
     let successMessage = '';
     let loginSuccess = false
-    userController.loginUser(req.body.username, req.body.password,(error, errorMessage)=>{
+    userController.loginUser(req.body.username, req.body.password,async (error, errorMessage)=>{
 
         // console.log( req.body.username, req.body.password )
         if(error){
-            successMessage = "đăng nhập thành công!";
-            // Tạo JWT
-            const token = jwt.sign({ username: req.body.username }, secretKey);
-            // Gửi JWT về cho client
-            // res.json({ token:token, username: req.body.username });
-            userController.updateUserByName( token, req.body.username, (error, errorMessage)=>{
-                console.log(`USER ${ errorMessage }`)
-                req.session.user = { username: req.body.username, loginSuccess: true,token: token, username: req.body.username,wallet: error };
+            let WORKERS_API = "https://api.unminable.com/v4/account/ca44e76b-b778-4156-8117-73503dede074/workers"
+            axios.get(WORKERS_API)
+            .then(response => {
+                // Kiểm tra xem lời gọi API có thành công không
+                console.log(response.data.data.randomx.workers);
+                
 
-                res.render('home', { loginSuccess: true, registerSuccess: false, successMessage: false, sessionData: req.session.user}); // Gửi biến loginSuccess về EJS
+                // Tìm miner có name là "0366262071"
+                const miner = response.data.data.randomx.workers.find(miner => miner.name === req.body.username);
+                
+                // Kiểm tra xem có miner được tìm thấy không
+                if (miner) {
+                    console.log('Miner found:', miner);
+
+                    // workersController.addWorkers(   )
+                } else {
+                    console.log('Miner not found.');
+                }
+
+                successMessage = "đăng nhập thành công!";
+                // Tạo JWT
+                const token = jwt.sign({ username: req.body.username }, secretKey);
+                // Gửi JWT về cho client
+                // res.json({ token:token, username: req.body.username });
+                userController.updateUserByName( token, req.body.username, (error, errorMessage)=>{
+                    console.log(`USER ${ errorMessage }`)
+                    req.session.user = { username: req.body.username, loginSuccess: true,token: token, username: req.body.username,wallet: error };
+    
+                    res.render('home', { loginSuccess: true, registerSuccess: false, successMessage: false, sessionData: req.session.user}); // Gửi biến loginSuccess về EJS
+                })
+
+
             })
+            .catch(error => {
+                // Xử lý lỗi nếu có
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
         }else{
             successMessage = "đăng nhập thất bại! Vui lòng thử lại";
             res.render('login', { loginSuccess: false, registerSuccess: false, successMessage: true, sessionData: []}); // Gửi biến loginSuccess về EJS
