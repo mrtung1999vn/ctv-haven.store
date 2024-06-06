@@ -32,21 +32,26 @@ class UserModel {
     }
 
     getUserByUsername(username, password, callback) {
-        this.db.get('SELECT * FROM users WHERE username = ? and password = ?', [username, password], (err, row) => {
-            if (err) {
-                console.error(`Error executing SQL query: ${err.message}`);
-                callback(err, null);
-            } else {
-                // console.log(row)
-                if (row) {
-                    console.log('USERNAME TRUE')
-                    callback(true, row);
+        try{
+            this.db.get('SELECT * FROM users WHERE username = ? and password = ?', [username, password], (err, row) => {
+                if (err) {
+                    console.error(`Error executing SQL query: ${err.message}`);
+                    callback(err, null);
+                    return
                 } else {
-                    console.log('USERNAME FALSE')
-                    callback(false, null);
+                    console.log(row)
+                    if (row) {
+                        console.log('USERNAME TRUE')
+                        callback(true, row);
+                    } else {
+                        console.log('USERNAME FALSE')
+                        callback(false, null);
+                    }
                 }
-            }
-        });
+            });
+        }catch(error){
+
+        }
     }
 
 

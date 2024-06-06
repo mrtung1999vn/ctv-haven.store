@@ -29,8 +29,8 @@ class UserController {
         });
     }
 
-    getUserName(username, callback){
-        this.userModel.getUserByUsername(username,callback)
+    getUserName(username, password, callback){
+        this.userModel.getUserByUsername(username, password,callback)
     }
 
     updateUserByName(token, id, callback){

@@ -90,7 +90,8 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
     const { username, password, email, reference } = req.body;
     let successMessage = '';
-    userController.getUserName(username, (error,errorMessage)=>{
+    console.log(  username, password, email, reference )
+    userController.getUserName(username, password, (error,errorMessage)=>{
         if(error){
             successMessage = "Đã có tài khoản trên hệ thống. Hãy đặt tài khoản tên khác!";
             res.render('register', { successMessage });
