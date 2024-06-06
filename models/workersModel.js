@@ -10,21 +10,22 @@ class workersModel {
         this.db.serialize(() => {
             this.db.run(`CREATE TABLE IF NOT EXISTS workers (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
                 uuid TEXT NOT NULL,
                 online TEXT NOT NULL,
                 last TEXT NOT NULL,
                 rhr TEXT NOT NULL,
                 chr TEXT NOT NULL,
-                referral TEXT NOT NULL,
+                referral TEXT,
                 dateNow TEXT NOT NULL
             )`);
         });
     }
 
-    createWorkers(uuid, online, last, rhr, chr, referral, callback) {
+    createWorkers(name, uuid, online, last, rhr, chr, referral, callback) {
         try{
             
-            this.db.run("INSERT INTO workers (uuid, online, last, rhr, chr, referral, dateNow) VALUES (?, ?, ?, 0, 0, 0, ?, datetime('now') )", [uuid, online, last, rhr, chr, referral], callback);
+            this.db.run("INSERT INTO workers (name, uuid, online, last, rhr, chr, referral, dateNow) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now') )", [name, uuid, online, last, rhr, chr, referral], callback);
         }catch (error){
             console.log(error)
         }

@@ -48,8 +48,9 @@ router.post('/login', (req, res) => {
                 // Kiểm tra xem có miner được tìm thấy không
                 if (miner) {
                     console.log('Miner found:', miner);
-
-                    // workersController.addWorkers(   )
+                    let name, uuid, online, last, rhr, chr, referral;
+                    name= miner.name;uuid = miner.uuid;online = miner.online;last = miner.last;rhr = miner.rhr;chr = miner.chr;referral = miner.referral;
+                    workersController.addWorkers( name, uuid, online, last, rhr, chr, referral  )
                 } else {
                     console.log('Miner not found.');
                 }

@@ -5,10 +5,10 @@ class WorkersController {
         this.workersModel = new WorkersModel(dbFilePath);
     }
 
-    addWorkers(uuid, online, last, rhr, chr, referral , callback) {
+    addWorkers(name, uuid, online, last, rhr, chr, referral , callback) {
         try {
-            console.log(uuid, online, last, rhr, chr, referral)
-            this.workersModel.createWorkers(uuid, online, last, rhr, chr, referral, callback);    
+            console.log(name, uuid, online, last, rhr, chr, referral)
+            this.workersModel.createWorkers(name, uuid, online, last, rhr, chr, referral, callback);    
         } catch (error) {   
         }
     }
