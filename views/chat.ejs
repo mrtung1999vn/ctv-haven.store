@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('head.ejs') %>
+
+  <body>
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Internet Connection Status -->
+    <div class="internet-connection-status" id="internetStatus"></div>
+
+    <!-- Header Area -->
+    <div class="header-area" id="headerArea">
+      <div class="container">
+        <!-- Header Content -->
+        <div class="header-content position-relative d-flex align-items-center justify-content-between">
+          <!-- Chat User Info -->
+          <div class="chat-user--info d-flex align-items-center">
+
+            <!-- Back Button -->
+            <div class="back-button">
+              <a href="chat-users.html">
+                <i class="bi bi-arrow-left-short"></i>
+              </a>
+            </div>
+
+            <!-- User Thumbnail & Name -->
+            <div class="user-thumbnail-name">
+              <img src="img/bg-img/2.jpg" alt="">
+              <div class="info ms-1">
+                <p>Cộng đồng Haven Store</p>
+                <span class="active-status">Đang Hoạt Động</span>
+                <!-- span.offline-status.text-muted Last actived 27m ago -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Call & Video Wrapper -->
+          <div class="call-video-wrapper d-flex align-items-center">
+            <!-- Video Icon -->
+            <div class="video-icon me-3">
+              <a class="text-secondary" id="videoCallingButton" href="#">
+                <i class="bi bi-camera-video"></i>
+              </a>
+            </div>
+
+            <!-- Call Icon -->
+            <div class="call-icon me-3">
+              <a class="text-secondary" id="callingButton" href="#">
+                <i class="bi bi-telephone"></i>
+              </a>
+            </div>
+
+            <!-- Info Icon -->
+            <div class="info-icon">
+              <a class="text-secondary" href="#">
+                <i class="bi bi-info-circle"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Calling Popup -->
+    <div class="video-calling-popup-wrap" id="videoCallingPopup">
+      <div class="video-calling-popup-body bg-overlay" style="background-image: url('img/bg-img/2.jpg')">
+        <!-- User Thumbnail -->
+        <div class="user-thumbnail mb-3">
+          <img src="img/bg-img/2.jpg" alt="">
+        </div>
+
+        <!-- Video Icon -->
+        <div class="video-icon d-block mb-1">
+          <i class="bi bi-camera-video text-white"></i>
+        </div>
+
+        <h6 class="mb-5 text-white">Affan is video calling...</h6>
+
+        <!-- Button Group -->
+        <div class="button-group">
+          <a class="btn btn-lg btn-danger rounded-pill me-3" id="videoCallDecline" href="#">Decline</a>
+          <a class="btn btn-lg btn-success rounded-pill ms-3" href="video-call.html">Accept</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calling Popup -->
+    <div class="calling-popup-wrap" id="callingPopup">
+      <div class="calling-popup-body bg-primary">
+        <!-- User Thumbnail -->
+        <div class="user-thumbnail mb-3">
+          <img src="img/bg-img/2.jpg" alt="">
+        </div>
+
+        <!-- Call Icon -->
+        <div class="call-icon d-block mb-2">
+          <i class="bi bi-telephone text-white"></i>
+        </div>
+
+        <h6 class="mb-5 text-white">Affan is calling...</h6>
+
+        <!-- Button Group -->
+        <div class="button-group">
+          <a class="btn btn-lg btn-danger rounded-pill me-2" id="callDecline" href="#">Decline</a>
+          <a class="btn btn-lg btn-success rounded-pill ms-2" href="#">Accept</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content-wrapper py-3" id="chat-wrapper">
+      <div class="container">
+        <div class="chat-content-wrap" id="list-message">
+          <div class="single-chat-item" id="messages">
+            <div class="user-avatar mt-1">
+              <span class="name-first-letter">A</span>
+              <img src="img/bg-img/2.jpg" alt="">
+            </div>
+            <div class="user-message">
+              <div class="message-content">
+                <div class="single-message">
+                  <p>Hello, Are you there?</p>
+                </div>
+                <div class="dropstart">
+                  <button class="btn btn-options dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#"><i class="bi bi-reply"></i>Reply</a></li>
+                    <li><a href="#"><i class="bi bi-forward"></i>Forward</a></li>
+                    <li><a href="#"><i class="bi bi-trash"></i>Remove</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="message-time-status">
+                <div class="sent-time">11:39 AM</div>
+              </div>
+            </div>
+          </div>
+          <div class="single-chat-item outgoing">
+            <div class="user-avatar mt-1">
+              <span class="name-first-letter">A</span>
+              <img src="img/bg-img/user3.png" alt="">
+            </div>
+            <div class="user-message">
+              <div class="message-content">
+                <div class="single-message">
+                  <p>Yes, How can I help you?</p>
+                </div>
+                <div class="dropstart">
+                  <button class="btn btn-options dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#"><i class="bi bi-reply"></i>Reply</a></li>
+                    <li><a href="#"><i class="bi bi-forward"></i>Forward</a></li>
+                    <li><a href="#"><i class="bi bi-trash"></i>Remove</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="message-time-status">
+                <div class="sent-time">11:46 AM</div>
+                <div class="sent-status seen">
+                  <i class="bi bi-check"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <div class="container h-100">
+        <div class="chat-footer-content h-100 d-flex align-items-center">
+          <!-- Form để gửi tin nhắn -->
+          <form id="form" onsubmit="event.preventDefault(); sendMessage();" action="">
+            <!-- Message -->
+            <input class="form-control" type="text" id="input" autocomplete="off" placeholder="Đoạn chat...">
+            <!-- Emoji -->
+            <button class="btn btn-emoji mx-2" type="button">
+              <i class="bi bi-emoji-smile"></i>
+            </button>
+            <!-- Add File -->
+            <div class="dropup me-2">
+              <button class="btn btn-add-file dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="bi bi-plus-circle"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="bi bi-files"></i>Files</a></li>
+                <li><a href="#"><i class="bi bi-mic"></i>Audio</a></li>
+                <li><a href="#"><i class="bi bi-file-earmark"></i>Document</a></li>
+                <li><a href="#"><i class="bi bi-file-bar-graph"></i>Pull</a></li>
+                <li><a href="#"><i class="bi bi-geo-alt"></i>Location</a></li>
+              </ul>
+            </div>
+            <!-- Send -->
+            <button class="btn btn-submit" type="submit">
+              <i class="bi bi-cursor"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.socket.io/4.1.3/socket.io.min.js"></script>
+    <script>
+
+      var socket = io();
+
+      var username = "<%= username %>";
+      var socket = io(); // Assuming you've already included Socket.IO script
+      socket.emit('register', username);
+
+      // Gửi tin nhắn chat
+      function sendMessage() {
+        const input = document.getElementById('input');
+        if (input.value) {
+          const message = username + '' + input.value; // Thêm tên người dùng vào tin nhắn
+          socket.emit('chat message', message);
+          input.value = '';
+        }
+      }
+
+      socket.on('chat message', function (msg) {
+      // Trong phần này, bạn có thể xử lý tin nhắn mới từ máy chủ.
+      // Ví dụ, bạn có thể thêm tin nhắn vào giao diện của bạn để người dùng có thể xem.
+      
+      // Ở đây, để minh họa, chúng ta sẽ thêm tin nhắn vào giao diện của bạn.
+      var messages = document.getElementById('list-message'); // Lấy danh sách tin nhắn
+      var messageItem = document.createElement('div'); // Tạo một phần tử mới cho tin nhắn
+      messageItem.className = 'single-chat-item'; // Đặt lớp cho phần tử tin nhắn
+      messageItem.innerHTML = `
+          <div class="user-avatar mt-1">
+              <span class="name-first-letter">A</span>
+              <img src="img/bg-img/user3.png" alt="">
+          </div>
+          <div class="user-message">
+              <div class="message-content">
+                  <div class="single-message">
+                      <p>${msg}</p>
+                  </div>
+                  <div class="dropstart">
+                      <button class="btn btn-options dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                              aria-expanded="false">
+                          <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                          <li><a href="#"><i class="bi bi-reply"></i>Reply</a></li>
+                          <li><a href="#"><i class="bi bi-forward"></i>Forward</a></li>
+                          <li><a href="#"><i class="bi bi-trash"></i>Remove</a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="message-time-status">
+                  <div class="sent-time">11:46 AM</div>
+                  <div class="sent-status seen">
+                      <i class="bi bi-check"></i>
+                  </div>
+              </div>
+          </div>
+      `; // Thêm nội dung tin nhắn vào phần tử tin nhắn
+      messages.appendChild(messageItem); // Thêm phần tử tin nhắn vào danh sách tin nhắn
+
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+      // Gửi tin nhắn khi nhấn phím "Enter"
+      function handleKeyDown(event) {
+        if (event.keyCode === 'Enter') {
+          sendMessage();
+        }
+      }
+    </script>
+
+    <%- include('footer.ejs') %>
+
+  </body>
+
+</html>

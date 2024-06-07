@@ -7,12 +7,15 @@ const { error } = require('console');
 const cors = require('cors');
 const secretKey = 'thanhtung0309' || process.env.SECRET_KEY;
 const app = express();
-
+const http = require('http');
 const PORT = process.env.PORT || 1001;
 const session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
-
-
+const chatRoutes = require('./routes/chatRouters');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+// Sử dụng server để tạo Socket.io instance
+const io = socketIo(server);
 // Sử dụng session middleware
 app.use(session({
     secret: secretKey, // Secret key để ký và bảo vệ session ID
@@ -40,10 +43,26 @@ app.use(express.static(path.join(__dirname, 'views'))); // Đặt thư mục ch�
 
 // Sử dụng các tệp tin tuyến cho các phần cụ thể của ứng dụng
 app.use('/', authRoutes);
+// Sử dụng các tệp tin tuyến cho các phần cụ thể của ứng dụng
+app.use('/', chatRoutes);
 
 
+// Lắng nghe sự kiện kết nối từ client
+io.on('connection', (socket) => {
+    console.log('A user connected');
 
+    // Lắng nghe sự kiện chat message từ client
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+        // Phát lại tin nhắn cho tất cả các client
+        io.emit('chat message', msg);
+    });
 
+    // Xử lý sự kiện disconnect
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
 
 
 //#region Giới Thiệu App
@@ -54,13 +73,7 @@ app.get('/', (req, res) => {
 //#endregion
 
 // Khởi động server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
 
-//#region Home
-app.get(`/home`, (req, res) => {
-    console.log("home")
-    res.render(path.join(__dirname, 'views', 'home.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
-})
-//#endregion
+server.listen(1001, () => {
+    console.log('Server is running on port 1001');
+});
