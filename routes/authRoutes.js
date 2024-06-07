@@ -118,7 +118,7 @@ router.get(`/home`, (req, res) => {
     const token = req.session.token;
     console.log( username, token )
 
-    res.render(path.join(__dirname, 'views', 'home.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
+    res.render(path.join(__dirname, '../views', 'home.ejs'),{username: username}); // Gửi file ejs cho trình duyệt khi truy cập /login
 })
 //#endregion
 

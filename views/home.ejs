@@ -351,6 +351,10 @@
     </div>
   </div>
 
+  <script>
+    var username = "<%= sessionData.username %>"
+    window.localStorage.setItem('username', username)
+  </script>
   <%- include('footer.ejs') %>
 
 

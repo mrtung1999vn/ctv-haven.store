@@ -49,17 +49,22 @@ app.use('/', chatRoutes);
 
 // Lắng nghe sự kiện kết nối từ client
 io.on('connection', (socket) => {
-    console.log('A user connected');
-
+    // Lắng nghe tên từ người dùng
+    socket.on('send_username', (username) => {
+        console.log(`User ${username} connected with ID: ${socket.id}`);
+        // Gửi tên người dùng và ID socket về cho client
+        socket.emit('user_info', { username: username, socketId: socket.id });
+    });
     // Lắng nghe sự kiện chat message từ client
     socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
+        console.log('message' + msg);
         // Phát lại tin nhắn cho tất cả các client
         io.emit('chat message', msg);
     });
 
     // Xử lý sự kiện disconnect
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (username) => {
+        console.log('USER', username)
         console.log('User disconnected');
     });
 });
