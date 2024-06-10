@@ -190,4 +190,63 @@ function LuuFile(filePath,newData){
       });
 }
 
-XuLyDangNhap()
+
+async function TiktokFollow(){
+  console.log("ĐĂNG NHẬP TIKTOK MÀN HÌNH CRAWLER !!!")
+  
+  // xu ly spam
+  const proxyServer = 'https://139.180.154.18:49140';
+  const proxyUsername = 'user49140';
+  const proxyPassword = 'FOim4Y7T3X';
+  const your_email = '61557153331786';
+  const your_password = 'A123456789****';
+  const _2fa = "M2P6SEJQCO7XXIXGGQHJDCKKOEDQGJTU";
+  let comment = `🎉🎁 TẶNG 50k 🎁🎉 T&T Hotel and Apartment 26/369 Văn Cao
+  🌟 Đừng bỏ lỡ cơ hội nhận ngay 50,000 VNĐ khi bạn đăng ký thông tin tại t & T Hotel AND APARTMENT! 🌟`
+
+  // driver = XuLyDangNhap(proxyServer, proxyUsername, proxyPassword)
+
+  const options = new chrome.Options().addArguments(`--proxy-server=${proxyServer}`);
+
+  const driver = new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .setProxy(proxy.manual({
+          http: `${proxyUsername}:${proxyPassword}@${proxyServer}`,
+          https: `${proxyUsername}:${proxyPassword}@${proxyServer}`,
+          ftp: `${proxyUsername}:${proxyPassword}@${proxyServer}`
+      }))
+      .build();
+  try {
+      await driver.get('https://tiktok.com');
+      // await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
+      await driver.sleep(60000); // Chờ 60 giây
+      // Điền thông tin email
+      await driver.findElement(By.id('email')).sendKeys(your_email);
+      // await driver.sleep(5000); // Dừng chương trình trong 10 giây
+      // Điền thông tin mật khẩu
+      await driver.findElement(By.id('pass')).sendKeys(your_password);
+      // await driver.sleep(5000); // Dừng chương trình trong 10 giây
+      // Nhấp vào nút đăng nhập
+      await driver.findElement(By.name('login')).click();
+
+
+      // await driver.sleep(100000); // Dừng chương trình trong 10 giây
+
+      await driver.executeScript("window.open('https://www.2fa.live', '_blank');");
+      // Đợi cho trang mới được mở
+      await driver.sleep(2000); // Chờ 2 giây
+
+      // Lấy danh sách các tab hiện tại
+      const handles = await driver.getAllWindowHandles();
+      // Chuyển tới tab mới mở
+      await driver.switchTo().window(handles[1]);
+  }
+  catch(error){
+
+  }
+
+}
+
+TiktokFollow()
+// XuLyDangNhap()
