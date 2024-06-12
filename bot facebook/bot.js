@@ -218,6 +218,7 @@ async function TiktokFollow(){
       }))
       .build();
   try {
+      
       await driver.get('https://tiktok.com');
       // await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
       await driver.sleep(60000); // Chờ 60 giây
