@@ -1,21 +1,85 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Liên kết file CSS bên ngoài -->
-    <link rel="stylesheet" href="style.css">
-</head>
+<!-- Mirrored from designing-world.com/affan-1.6.0/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 May 2024 13:59:58 GMT -->
+
+<%- include('head.ejs') %>
+
 <body>
-    <div class="container">
-        <h1>Login</h1>
-        <form action="/login" method="post">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="/register">Register here</a></p>
+    <!-- Preloader -->
+
+
+    <!-- Internet Connection Status -->
+    <div class="internet-connection-status" id="internetStatus"
+        style="display: none; background-color: rgb(0, 184, 148);">Your internet connection is back.</div>
+
+    <!-- Back Button -->
+    <div class="login-back-button">
+        <a href="hero-blocks.html">
+            <i class="bi bi-arrow-left-short"></i>
+        </a>
     </div>
+
+    <!-- Login Wrapper Area -->
+    <div class="login-wrapper d-flex align-items-center justify-content-center">
+        <div class="custom-container">
+            <div class="text-center px-4">
+                <img class="login-intro-img" src="/views/img/bg-img/36.png" alt="">
+            </div>
+
+            <!-- Register Form -->
+            <div class="register-form mt-4">
+                <h6 class="mb-3 text-center">Đăng Nhập để tiếp tục với Haven Store</h6>
+
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="username" placeholder="Tài Khoản" required>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <input class="form-control" type="password" name="password" placeholder="Điền Mật Khẩu" required>
+                        <div class="position-absolute" id="password-visibility">
+                            <i class="bi bi-eye"></i>
+                            <i class="bi bi-eye-slash"></i>
+                        </div>
+                    </div>
+
+                    <% if (registerSuccess) { %>
+                        <div class="alert alert-success" role="alert">
+                            Đăng ký thành công!
+                        </div>
+                    <% } %>
+
+                    <% if (loginSuccess) { %>
+                        <div class="alert alert-success" role="alert">
+                            Đăng nhập thành công!
+                        </div>
+                    <% } %>
+
+                    
+                    <% if (loginSuccess) { %>
+                        <div class="alert alert-success" role="alert">
+                            Đăng nhập thất bại!
+                        </div>
+                    <% } %>
+                    
+                    <button class="btn btn-primary w-100" type="submit">Đăng nhập</button>
+                </form>
+                
+            </div>
+
+            <!-- Login Meta -->
+            <div class="login-meta-data text-center">
+                <a class="stretched-link forgot-password d-block mt-3 mb-1" href="forget-password.html">Quên mật khẩu ?</a>
+                <p class="mb-0">Bạn chưa có tài khoản? <a class="stretched-link" href="/register">Đăng Ký Ngay</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <%- include('footer.ejs') %>
+
+
+
 </body>
+<!-- Mirrored from designing-world.com/affan-1.6.0/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 May 2024 13:59:58 GMT -->
+
 </html>

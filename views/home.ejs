@@ -1,0 +1,342 @@
+<html lang="en">
+
+<%- include('head.ejs') %>
+
+<body>
+  <!-- Preloader -->
+
+
+  <!-- Internet Connection Status -->
+  <div class="internet-connection-status" id="internetStatus"
+    style="display: none; background-color: rgb(0, 184, 148);">Your internet connection is back.</div>
+
+  <!-- Header Area -->
+  <div class="header-area" id="headerArea">
+    <div class="container">
+      <!-- Header Content -->
+      <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
+        <!-- Logo Wrapper -->
+        <div class="logo-wrapper">
+          <a href="/home">
+            <img src="img/core-img/logo.png" alt="">
+          </a>
+        </div>
+
+        <!-- Navbar Toggler -->
+        <div class="navbar--toggler" id="affanNavbarToggler" data-bs-toggle="offcanvas" data-bs-target="#affanOffcanvas"
+          aria-controls="affanOffcanvas">
+          <span class="d-block"></span>
+          <span class="d-block"></span>
+          <span class="d-block"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- # Sidenav Left -->
+  <div class="offcanvas offcanvas-start" id="affanOffcanvas" data-bs-scroll="true" tabindex="-1"
+    aria-labelledby="affanOffcanvsLabel">
+
+    <button class="btn-close btn-close-white text-reset" type="button" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
+
+    <div class="offcanvas-body p-0">
+      <div class="sidenav-wrapper">
+        <!-- Sidenav Profile -->
+        <div class="sidenav-profile bg-gradient">
+          <div class="sidenav-style1"></div>
+
+          <!-- User Thumbnail -->
+          <div class="user-profile">
+            <img src="img/bg-img/2.jpg" alt="">
+          </div>
+
+          <!-- User Info -->
+          <div class="user-info">
+            <h6 class="user-name mb-0"><%= sessionData.username %></h6>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Sidenav Nav -->
+        <ul class="sidenav-nav ps-0">
+          <li>
+            <a href="/home"><i class="bi bi-house-door"></i> Trang chủ</a>
+          </li>
+          <li>
+            <a href="/shop"><i class="bi bi-folder2-open"></i> Shop
+            </a>
+          </li>
+          <li>
+            <a href="/ctv"><i class="bi bi-collection"></i> CTV
+            </a>
+          </li>
+          <li>
+            <a href="/settings"><i class="bi bi-gear"></i> Thiết lập</a>
+          </li>
+          <!-- <li>
+            <div class="night-mode-nav">
+              <i class="bi bi-moon"></i> Night Mode
+              <div class="form-check form-switch">
+                <input class="form-check-input form-check-success" id="darkSwitch" type="checkbox">
+              </div>
+            </div>
+          </li> -->
+          <li>
+            <a href="/log-out"><i class="bi bi-box-arrow-right"></i> Thoát</a>
+          </li>
+        </ul>
+
+        <!-- Social Info -->
+        <div class="social-info-wrap">
+          <a href="#">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="#">
+            <i class="bi bi-twitter"></i>
+          </a>
+          <a href="#">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </div>
+
+        <!-- Copyright Info -->
+        <div class="copyright-info">
+          <p>
+            <span id="copyrightYear"></span>
+            &copy; Xây dựng bởi <a href="https://zalo.me/0366262072">Thanh Tùng</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+  <div class="page-content-wrapper">
+
+    <!-- Welcome Toast -->
+    <div class="toast toast-autohide custom-toast-1 toast-success home-page-toast" role="alert" aria-live="assertive"
+      aria-atomic="true" data-bs-delay="2000" data-bs-autohide="true">
+      <div class="toast-body">
+        <i class="bi bi-bookmark-check text-white h1 mb-0"></i>
+        <div class="toast-text ms-3 me-2">
+          <p class="mb-1 text-white"><p>Xin chào, <%= sessionData.username %>!</p></p>
+          <small class="d-block">Haven Store <strong>Chúc Bạn Một Ngày Tốt Lành</strong> </small>
+        </div>
+      </div>
+      <button class="btn btn-close btn-close-white position-absolute p-1" type="button" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+
+    <!-- Tiny Slider One Wrapper -->
+    <div class="tiny-slider-one-wrapper">
+      <div class="tiny-slider-one">
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/31.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Hiển thị Banner</h3>
+                <p class="text-white mb-4">Giới thiệu cho khách hàng 01.</p>
+                <a class="btn btn-creative btn-warning" href="#">Xem ngay</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/33.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Hiển thị Banner</h3>
+                <p class="text-white mb-4">Giới thiệu cho khách hàng 02.</p>
+                <a class="btn btn-creative btn-warning" href="#">Xem Ngay</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- Single Hero Slide -->
+         <div>
+            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/33.jpg')">
+              <div class="h-100 d-flex align-items-center text-center">
+                <div class="container">
+                  <h3 class="text-white mb-1">Hiển thị Banner</h3>
+                  <p class="text-white mb-4">Giới thiệu cho khách hàng 03.</p>
+                  <a class="btn btn-creative btn-warning" href="#">Xem Ngay</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+ 
+      </div>
+    </div>
+
+    <div class="pt-3"></div>
+
+
+    <div class="pb-3"></div>
+
+    <!-- <div class="container direction-rtl" style="display: none;">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-4">
+                <div class="feature-card mx-auto text-center">
+                  <div class="card mx-auto bg-gray">
+                    <p class="mb-0"><b>Vốn thực tế</b></p>
+                  </div>
+                  <p class="mb-0">10.000.000đ</p>
+                </div>
+              </div>
+  
+              <div class="col-4">
+                <div class="feature-card mx-auto text-center">
+                  <div class="card mx-auto bg-gray">
+                    <p class="mb-0"><b>Vốn thị trường</b></p>
+                  </div>
+                  <p class="mb-0">50.000.000đ</p>
+                </div>
+              </div>
+  
+              <div class="col-4">
+                <div class="feature-card mx-auto text-center">
+                  <div class="card mx-auto bg-gray">
+                    <p class="mb-0"><b>Số lượng Haven</b></p>
+                  </div>
+                  <p class="mb-0">10.000 H</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+    <div class="container">
+        <div class="element-heading">
+          <h6>Thông số chi tiết</h6>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+          <div class="card-body">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tên máy</th>
+                  <th scope="col">Tốc độ</th>
+                  <th scope="col">Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Tổng</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">1</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td colspan="2"></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    <div class="container mt-2">
+        <div class="element-heading">
+          <h6>Tính toán doanh thu nhận được</h6>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form action="#" method="GET">
+                    <div class="form-group">
+                      <label class="form-label" for="exampleInputText">Tốc độ máy</label>
+                      <input class="form-control form-control-clicked" id="hsComputers" type="text" placeholder="Điền tốc độ máy">
+                    </div>
+        
+                    <label id="resultsComputers">Tốc độ máy: </label>
+        
+                    <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center" type="button">
+                      Tính toán
+                      <i class="bi bi-arrow-right fz-16 ms-1"></i>
+                    </button>
+                  </form>
+            </div>
+        </div>
+    </div>
+
+  </div>
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav">
+    <div class="container px-0">
+      <!-- Footer Content -->
+      <div class="footer-nav position-relative">
+        <ul class="h-100 d-flex align-items-center justify-content-between ps-0">
+          <li class="active">
+            <a href="/home">
+              <i class="bi bi-house"></i>
+              <span>Trang chủ</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/shop">
+              <i class="bi bi-collection"></i>
+              <span>Shop</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/ctv">
+              <i class="bi bi-folder2-open"></i>
+              <span>CTV</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/chat">
+              <i class="bi bi-chat-dots"></i>
+              <span>Chat</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/setting">
+              <i class="bi bi-gear"></i>
+              <span>Thiết lập</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var username = "<%= sessionData.username %>"
+    window.localStorage.setItem('username', username)
+  </script>
+  <%- include('footer.ejs') %>
+
+
+</body>
+<!-- Mirrored from designing-world.com/affan-1.6.0/home.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 May 2024 13:59:31 GMT -->
+
+</html>

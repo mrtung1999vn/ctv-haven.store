@@ -1,0 +1,54 @@
+<!-- views/video.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      var username;
+
+      // Gửi tin nhắn chat
+      function sendMessage() {
+        var message = document.getElementById('message').value;
+        socket.emit('chat message', { username: username, message: message });
+        document.getElementById('message').value = '';
+      }
+
+      // Hiển thị tin nhắn chat
+      socket.on('chat message', function(msg) {
+        var messages = document.getElementById('messages');
+        var item = document.createElement('li');
+        item.textContent = msg.username + ': ' + msg.message;
+        messages.appendChild(item);
+      });
+
+      // Đăng ký
+      function register() {
+        username = document.getElementById('username').value;
+        document.getElementById('register-form').style.display = 'none';
+        document.getElementById('chat-form').style.display = 'block';
+      }
+    </script>
+</head>
+<body>
+    <div id="register-form">
+        <input type="text" id="username" placeholder="Enter your username">
+        <button onclick="register()">Register</button>
+    </div>
+
+    <div id="chat-form" style="display: none;">
+        <video controls width="640" height="360">
+            <source src="/video" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <ul id="messages"></ul>
+        <input id="message" autocomplete="off">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</body>
+</html>

@@ -5,18 +5,23 @@ class UserController {
         this.userModel = new UserModel(dbFilePath);
     }
 
-    registerUser(username, password, callback) {
+    registerUser(username, password, email,reference , callback) {
         try {
-            this.userModel.createUser(username, password, callback);    
+            console.log(username, password, email)
+            this.userModel.createUser(username, password, email, reference, callback);    
         } catch (error) {   
         }
     }
 
     loginUser(username, password, callback) {
-        this.userModel.getUserByUsername(username, (err, user) => {
+        this.userModel.getUserByUsername(username, password, (err, user) => {
+            if(user=== null){ 
+                callback(null, false);  // Authentication error  
+                return    
+            }
             if (err) {
                 callback(err);
-            } else if (!user || user.password !== password) {
+            } else if (user.username !== user || user.password !== password) {
                 callback(null, false);  // Authentication error
             } else {
                 callback(null, true);  // Authentication successful
@@ -24,8 +29,12 @@ class UserController {
         });
     }
 
-    getUserName(username, callback){
-        this.userModel.getUserByUsername(username,callback)
+    getUserName(username, password, callback){
+        this.userModel.getUserByUsername(username, password,callback)
+    }
+
+    updateUserByName(token, id, callback){
+        this.userModel.updateUserByName(token, id, callback)
     }
 }
 

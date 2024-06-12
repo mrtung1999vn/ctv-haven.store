@@ -1,58 +1,84 @@
+// DATA DEMO 0923107421
+
 const express = require('express');
 const UserController = require('./controllers/userController');
 const path = require('path');
 const { error } = require('console');
-
+const cors = require('cors');
+const secretKey = 'thanhtung0309' || process.env.SECRET_KEY;
 const app = express();
+const http = require('http');
 const PORT = process.env.PORT || 1001;
+const session = require('express-session');
+const authRoutes = require('./routes/authRoutes');
+const chatRoutes = require('./routes/chatRouters');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+// Sử dụng server để tạo Socket.io instance
+const io = socketIo(server);
+// Sử dụng session middleware
+app.use(session({
+    secret: secretKey, // Secret key để ký và bảo vệ session ID
+    resave: false, // Không lưu lại session nếu không có sự thay đổi
+    saveUninitialized: false // Không tạo session cho người dùng nếu chưa được khởi tạo
+}));
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Cấu hình EJS làm trình động mặc định cho Express
 app.set('view engine', 'ejs');
+// Middleware để phân tích nội dung gửi dưới dạng JSON
+app.use(express.json());
 
-const userController = new UserController('./database.db');
 
 // Middleware để xử lý dữ liệu gửi từ form
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'public'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, '/views/css'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, '/views/img'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, '/views/js'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
+app.use(express.static(path.join(__dirname, 'views'))); // Đặt thư mục chứa các tệp tĩnh (ví dụ: CSS, hình ảnh)
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'login.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
+
+// Sử dụng các tệp tin tuyến cho các phần cụ thể của ứng dụng
+app.use('/', authRoutes);
+// Sử dụng các tệp tin tuyến cho các phần cụ thể của ứng dụng
+app.use('/', chatRoutes);
+
+
+// Lắng nghe sự kiện kết nối từ client
+io.on('connection', (socket) => {
+    // Lắng nghe tên từ người dùng
+    socket.on('send_username', (username) => {
+        console.log(`User ${username} connected with ID: ${socket.id}`);
+        // Gửi tên người dùng và ID socket về cho client
+        socket.emit('user_info', { username: username, socketId: socket.id });
+    });
+    // Lắng nghe sự kiện chat message từ client
+    socket.on('chat message', (msg) => {
+        console.log('message' + msg);
+        // Phát lại tin nhắn cho tất cả các client
+        io.emit('chat message', msg);
+    });
+
+    // Xử lý sự kiện disconnect
+    socket.on('disconnect', (username) => {
+        console.log('USER', username)
+        console.log('User disconnected');
+    });
 });
 
-// Xử lý đăng nhập
-app.post('/login', (req, res) => {
-    userController.loginUser(req.body.username, req.body.password)
-});
 
-// Route cho trang đăng ký
-app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'register.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
-});
-
-// Xử lý đăng ký
-app.post('/register', (req, res) => {
-
-
-    const { username, password } = req.body;
-    let successMessage = ''
-    userController.getUserName(username, (error,errorMessage)=>{
-        console.log(error)
-        if(error){
-            console.log('dang ky that bai')
-            successMessage = "Username already exists. Please choose a different username.";
-            res.render('register', { successMessage });
-        }else{
-            console.log('dang ky thanh cong')
-            userController.registerUser(req.body.username, req.body.password)
-            successMessage = "Registration successful! You can now login.";
-            res.render('register', { successMessage });
-        }
-    })
-
-});
+//#region Giới Thiệu App
+app.get('/', (req, res) => {
+    console.log("")
+    res.render(path.join(__dirname, 'views', 'hello-app.ejs')); // Gửi file ejs cho trình duyệt khi truy cập /login
+})
+//#endregion
 
 // Khởi động server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+
+server.listen(1001, () => {
+    console.log('Server is running on port 1001');
 });
